@@ -1,0 +1,20 @@
+# bearing — generated local state (safe to remove via bearing-uninstall)
+.bearing/.gitnexus-*
+.bearing/.bearing-*
+.bearing/.task-core.md
+.bearing/task-cores/
+*.bearing-backup
+.bearing/manifest.json
+.bearing/hooks.local.json
+.claude/skills/*
+!.claude/skills/gitnexus-area-*/
+# --- end bearing ---
+
+# project
+node_modules/
+dist/
+.env
+data/
+*.db
+*.tsbuildinfo
+.bearing/state/

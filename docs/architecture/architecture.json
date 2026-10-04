@@ -1,0 +1,55 @@
+{
+  "project": "AiDeveloperLab",
+  "version": 1,
+  "system_diagram": {
+    "tiers": [
+      {
+        "name": "Visitor browser",
+        "groups": [
+          {
+            "name": "Portfolio web app",
+            "kind": "client",
+            "nodes": [
+              {"id": "shell", "name": "Page shell and sections", "kind": "app", "tech": "React 19, TypeScript, Vite", "modules": ["Hero", "What I Build", "Selected Work", "About", "Contact", "Navigation"], "owns_store": false},
+              {"id": "scenes", "name": "3D scenes with fallbacks", "kind": "app", "tech": "React Three Fiber, drei, Motion", "modules": ["AI Core", "Tech universe", "2D fallbacks"], "owns_store": false},
+              {"id": "assistant", "name": "Assistant matcher", "kind": "app", "tech": "TypeScript, runs in the browser", "modules": ["Matcher", "Knowledge entries"], "owns_store": false},
+              {"id": "content", "name": "Typed content files", "kind": "store", "tech": "TypeScript modules bundled at build time", "modules": ["Profile", "Projects", "Stack", "UI strings"], "owns_store": true}
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Hosting",
+        "groups": [
+          {
+            "name": "Vercel",
+            "kind": "gateway",
+            "nodes": [
+              {"id": "host", "name": "Static hosting and CDN", "kind": "service", "tech": "Vercel, static build of apps/web", "modules": [], "owns_store": false}
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Source and build",
+        "groups": [
+          {
+            "name": "GitHub",
+            "kind": "external",
+            "nodes": [
+              {"id": "repo", "name": "Repository and CI", "kind": "external", "tech": "GitHub, GitHub Actions (lint, typecheck, build)", "modules": [], "owns_store": false}
+            ]
+          }
+        ]
+      }
+    ],
+    "links": [
+      {"from": "host", "to": "shell", "label": "Static files over HTTPS", "kind": "sync", "unconfirmed": true},
+      {"from": "shell", "to": "scenes", "label": "Lazy import of the 3D chunk", "kind": "async", "unconfirmed": true},
+      {"from": "shell", "to": "assistant", "label": "Lazy import of the assistant chunk", "kind": "async", "unconfirmed": true},
+      {"from": "shell", "to": "content", "label": "Reads typed content", "kind": "sync", "unconfirmed": true},
+      {"from": "assistant", "to": "content", "label": "Reads knowledge entries", "kind": "sync", "unconfirmed": true},
+      {"from": "repo", "to": "host", "label": "Push triggers build and deploy", "kind": "async", "unconfirmed": true}
+    ]
+  }
+}

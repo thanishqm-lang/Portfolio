@@ -1,0 +1,17 @@
+{
+  "project": "AiDeveloperLab",
+  "group": "AiDeveloperLab",
+  "repos": [
+    {
+      "name": "AiDeveloperLabWeb",
+      "path": ".",
+      "git_path": "AI-Work-Intelligence",
+      "stack": "react-web",
+      "tech": "React 19, TypeScript (strict), Vite, React Three Fiber, drei, Motion; Vercel static hosting; GitHub Actions",
+      "responsibility": "The whole portfolio: seven sections, typed content, the in-browser assistant, 3D scenes and their fallbacks",
+      "apps": [
+        {"path": "apps/web", "name": "Portfolio", "for": "visitors viewing the AI Developer Lab site"}
+      ]
+    }
+  ]
+}

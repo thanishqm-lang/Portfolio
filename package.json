@@ -1,0 +1,32 @@
+{
+  "name": "ai-work-intelligence",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22.9.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "concurrently": "^9.0.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^16.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8.0.0"
+  },
+  "scripts": {
+    "dev": "npm run dev -w @awi/web",
+    "build": "npm run build -w @awi/web && node scripts/check-bundle.mjs",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "eslint . && node scripts/check-tokens.mjs && node scripts/check-a11y.mjs",
+    "check:assistant": "tsx scripts/check-assistant.mts",
+    "check:motion": "python scripts/motion_check.py --shared apps/web/src/styles/tokens.css apps/web/src/styles.css apps/web/src/components apps/web/src/motion apps/web/src/assistant",
+    "format": "prettier --write ."
+  }
+}

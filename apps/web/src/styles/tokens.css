@@ -1,0 +1,116 @@
+/*
+ * Design tokens: the ONLY place raw colour values live (tenet 7).
+ * Components and stylesheets reference these variables, never hex literals.
+ */
+:root {
+  /* Colour */
+  --color-bg: #05070d;
+  --color-bg-raised: #0a1020;
+  --color-text: #e6f1ff;
+  /* Measured 4.67:1 or better on every background the page can produce, glows stacked included */
+  --color-text-muted: #b8c8de;
+  --color-accent: #00e5ff; /* electric cyan, the primary accent (chosen 2026-10-04) */
+  --color-accent-contrast: #031016; /* text on top of an accent fill */
+  /* Category colours for the toolkit universe, used with the two accents above (tenet 7) */
+  --color-accent-3: #34d399;
+  --color-accent-4: #f472b6;
+  --color-accent-5: #fbbf24;
+  --color-accent-2: #8b5cf6; /* violet, the secondary accent (proposed in FND-01) */
+  --color-surface: rgb(16 24 44 / 0.55);
+  --color-border: rgb(0 229 255 / 0.18);
+  --color-border-strong: rgb(0 229 255 / 0.45);
+  --color-glow: rgb(0 229 255 / 0.28);
+  --color-glow-2: rgb(139 92 246 / 0.26);
+
+  /* Glow and elevation */
+  --glow-accent: 0 0 24px var(--color-glow);
+  --glow-accent-2: 0 0 24px var(--color-glow-2);
+
+  /* Spacing (4px scale) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-9: 7rem;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* Borders */
+  --border-width: 1px;
+
+  /* Motion (src/motion/tokens.ts mirrors these). Only transform and opacity are ever animated. */
+  --duration-instant: 80ms; /* press feedback, hover */
+  --duration-fast: 150ms; /* state changes, exits, small entrances */
+  --duration-base: 300ms; /* section reveals, dialogs */
+  --duration-slow: 600ms; /* hero text */
+  --duration-deliberate: 700ms; /* the one orchestrated moment: the hero intro */
+  --stagger: 40ms; /* gap between siblings in an entrance; cap at 8 items */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Type: three roles, self-hosted, with system fallbacks (tenet 5) */
+  --font-display: 'Space Grotesk Variable', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Inter Variable', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'Cascadia Code', Consolas, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+  --text-2xl: clamp(2.25rem, 1.5rem + 3vw, 4.5rem);
+
+  /* Layout */
+  --nav-height: 3.5rem;
+  --content-width: 72rem;
+  --gutter: clamp(1rem, 4vw, 2rem);
+}
+
+
+/*
+ * Reduced motion: the OS preference (prefers-reduced-motion) and the on-page "Pause animations"
+ * control (html[data-motion='paused']) both zero every duration and stop every animation and
+ * transition. End states stay: nothing is hidden, only the movement goes.
+ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 0ms;
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+    --duration-deliberate: 0ms;
+    --stagger: 0ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:root[data-motion='paused'] {
+  --duration-instant: 0ms;
+  --duration-fast: 0ms;
+  --duration-base: 0ms;
+  --duration-slow: 0ms;
+  --duration-deliberate: 0ms;
+  --stagger: 0ms;
+}
+
+:root[data-motion='paused'] *,
+:root[data-motion='paused'] *::before,
+:root[data-motion='paused'] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}

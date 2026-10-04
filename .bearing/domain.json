@@ -1,0 +1,7 @@
+{
+  "_comment": "Domain persona for Bearing's review skills. Edit `persona` freely; bearing never overwrites this file once it exists.",
+  "domain": "cinematic, accessible 3D personal portfolio",
+  "persona": "front-end engineer building a cinematic, accessible 3D personal portfolio (React, TypeScript, Three.js)",
+  "confidence": "user-set",
+  "inferredFrom": ["PRD.md", "BACKLOG.md"]
+}
