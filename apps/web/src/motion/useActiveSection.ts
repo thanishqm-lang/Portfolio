@@ -24,15 +24,21 @@ export function useActiveSection(ids: readonly string[], offset: number): string
       }
       setActive(current);
     };
+    let settle = 0;
     const schedule = () => {
       if (frame === 0) frame = window.requestAnimationFrame(update);
+      // Sections far down are laid out lazily, so their real size only appears after a jump lands:
+      // measure once more when scrolling has stopped.
+      window.clearTimeout(settle);
+      settle = window.setTimeout(update, 180);
     };
-    update();
+    schedule(); // first measurement waits for a frame, so startup never forces a layout
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule);
     window.addEventListener('hashchange', schedule);
     return () => {
       if (frame !== 0) window.cancelAnimationFrame(frame);
+      window.clearTimeout(settle);
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', schedule);
       window.removeEventListener('hashchange', schedule);

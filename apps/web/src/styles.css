@@ -20,10 +20,6 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background:
-    radial-gradient(60rem 40rem at 50% -10%, var(--color-glow-2), transparent 70%),
-    radial-gradient(50rem 30rem at 85% 30%, var(--color-glow), transparent 75%), var(--color-bg);
-  background-attachment: fixed;
   color: var(--color-text);
   font-family: var(--font-body);
   font-size: var(--text-base);
@@ -31,6 +27,20 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/*
+ * The page glow sits on its own fixed layer instead of `background-attachment: fixed`, which makes the
+ * browser repaint the whole gradient on every scroll step. Same look, no repaint cost.
+ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60rem 40rem at 50% -10%, var(--color-glow-2), transparent 70%),
+    radial-gradient(50rem 30rem at 85% 30%, var(--color-glow), transparent 75%);
+}
 h1,
 h2,
 h3 {
@@ -59,8 +69,8 @@ a {
   display: block;
 }
 
+/* The offset under the sticky bar comes from html { scroll-padding-top }; adding scroll-margin here too would double it. */
 .section {
-  scroll-margin-top: calc(var(--nav-height) + var(--space-4));
   min-height: 70vh;
   padding: var(--space-8) var(--gutter);
 }
@@ -1210,4 +1220,13 @@ html {
 
 .site-nav__list a {
   white-space: nowrap;
+}
+
+/*
+ * Sections far below the screen are not laid out or painted until the visitor scrolls near them.
+ * The remembered size (`auto`) keeps anchor jumps and the scrollbar stable after the first visit.
+ */
+.section:not(.section--hero) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 45rem;
 }

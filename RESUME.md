@@ -47,3 +47,10 @@ A single-page, cinematic 3D personal portfolio for **Sri Thanishq Manda** (site 
 
 - Python 3.12 is installed (`%LOCALAPPDATA%\Programs\Python\Python312\python.exe`); the design gate on Windows needs `--kit C:\Users\thani\.claude\plugins\cache\bearing\bearing-apps\0.7.0`.
 - The old dashboard code (`apps/api`, `packages/shared`, `PRD.legacy-dashboard.md`) stays untouched until FND-04 and the owner's explicit approval.
+
+## Release status (after the first deploy)
+- Live at https://portfolio-nw1b.vercel.app/ (Vercel Hobby, personal non-commercial use only; Root Directory `apps/web`). Source: github.com/thanishqm-lang/Portfolio (the agent cannot push; the owner runs `git push` in a normal terminal).
+- Lighthouse (live site, first deploy): desktop performance 86 / accessibility 100 / best practices 100 / SEO 100; phone performance 70. Performance work afterwards (measured locally): the 3D loads only once the page is idle (phones wait a few seconds or until the first interaction), the page glow is a fixed layer instead of `background-attachment: fixed`, scroll reveals use a non-measuring observer (no forced layout), and below-the-fold sections use `content-visibility: auto`. Local result: desktop 99, phone 97, accessibility 100.
+- Bug found and fixed on the way: jumps from the navigation landed 144 px down because `scroll-margin-top` on `.section` and `html { scroll-padding-top }` both applied, so the previous nav link stayed highlighted. Only `scroll-padding-top` remains.
+- Decisions: the platform and client names are never shown (hidden by the owner); GitHub profile link added; share image is the dark lab Core (regenerate with `node scripts/make-og-image.mjs`).
+- Still open: FND-04 (remove the old dashboard code, needs owner approval), optional WORK-02/TECH-02/MOT-03, custom domain (REL-05). Redeploy happens automatically when the owner pushes to `main`.

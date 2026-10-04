@@ -32,7 +32,7 @@ export function useHeroParallax(ref: RefObject<HTMLElement | null>): void {
     const onScroll = () => {
       if (frame === 0) frame = window.requestAnimationFrame(update);
     };
-    update();
+    onScroll(); // first measurement waits for a frame, so startup never forces a layout
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     return () => {

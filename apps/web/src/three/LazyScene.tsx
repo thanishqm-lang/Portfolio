@@ -1,6 +1,7 @@
 import { Component, Suspense, useMemo, useRef, type ReactNode } from 'react';
 import { useReducedMotion } from '../motion/useReducedMotion';
 import { useInView } from './useInView';
+import { useWhenIdle } from './useWhenIdle';
 import { detectWebGL } from './webgl';
 
 /** What every lazily loaded scene receives. `active` is false while the scene is off screen. */
@@ -45,7 +46,8 @@ export function LazyScene({ render, fallback, className }: LazySceneProps) {
   const reducedMotion = useReducedMotion();
   const webgl = useMemo(() => detectWebGL(), []);
   const { inView, seen } = useInView(ref);
-  const use3D = webgl && !reducedMotion && seen;
+  const idle = useWhenIdle();
+  const use3D = webgl && !reducedMotion && seen && idle;
 
   return (
     <div ref={ref} className={className} aria-hidden="true">

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { REVEAL } from '../motion/tokens';
 import { useReducedMotion } from '../motion/useReducedMotion';
 
@@ -13,32 +13,36 @@ interface RevealProps {
 
 /**
  * Fades and lifts its content in once, when it scrolls into view. The default is the finished state:
- * content that is already on screen, or any content when motion is reduced or paused, is simply shown.
- * Only content below the fold gets a start state, and the observer removes it, so nothing can stay
- * hidden. Only opacity and transform change (motion-design rules).
+ * content that is on screen at load, or any content when motion is reduced or paused, is simply shown.
+ * Only content that the observer reports as below the screen gets a start state, and the same observer
+ * removes it, so nothing can stay hidden. It never measures the page itself (no forced layout), which
+ * keeps startup cheap. Only opacity and transform change (motion-design rules).
  */
 export function Reveal({ children, index = 0, className }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
   const [phase, setPhase] = useState<Phase>('static');
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const element = ref.current;
     if (element === null || reducedMotion) {
       setPhase('static');
       return;
     }
-    // Already on screen (or above it): show it as it is; there is nothing to reveal.
-    if (element.getBoundingClientRect().top < window.innerHeight * 0.92) {
-      setPhase('static');
-      return;
-    }
-    setPhase('hidden');
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting === true) {
-          setPhase('in');
-          observer.disconnect();
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            // Seen: reveal it if it was waiting; content already on screen at load stays as it is.
+            setPhase((current) => (current === 'hidden' ? 'in' : current));
+          } else if (
+            entry.boundingClientRect.top > (entry.rootBounds?.height ?? window.innerHeight) ||
+            // A section the browser has not laid out yet (far below the screen) reports an empty box.
+            entry.boundingClientRect.height === 0
+          ) {
+            // Below the screen and not yet revealed: give it its start state.
+            setPhase((current) => (current === 'static' ? 'hidden' : current));
+          }
         }
       },
       { rootMargin: '0px 0px -8% 0px' },
