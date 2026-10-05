@@ -25,12 +25,13 @@ export function HeroBody({ nextId }: { nextId: string }) {
         <Button href={`#${nextId}`} variant="ghost">
           {HERO.workAction}
         </Button>
+        <span className="hero__status">{HERO.status}</span>
       </div>
     </div>
   );
 }
 
-/** The Core on the accent field, drawn behind the hero text. Rendered by the section as its background. */
+/** The Core, drawn large behind the hero name. Rendered by the section as its background. */
 export function HeroBackground() {
   const ref = useRef<HTMLDivElement>(null);
   useHeroParallax(ref);

@@ -7,7 +7,7 @@ import { idleSpeed } from '../three/idleSpeed';
 import { readCssToken } from '../three/tokens';
 
 /**
- * The AI Core on the green field: a warm heart inside two wireframe lattices and three rings. It spins
+ * The AI Core on the dark ground: a warm heart inside two wireframe lattices and three rings. It spins
  * and pulses for a few seconds, then settles; it keeps following the cursor.
  */
 function AiCore() {

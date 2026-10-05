@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource-variable/bricolage-grotesque/wdth.css';
 import '@fontsource-variable/hanken-grotesk';
 import { App } from './App';
 import './styles.css';

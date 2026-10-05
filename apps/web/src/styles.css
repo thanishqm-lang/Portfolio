@@ -7,7 +7,7 @@
 }
 
 html {
-  color-scheme: light;
+  color-scheme: dark;
   background: var(--color-bg);
   accent-color: var(--color-accent);
   scrollbar-color: var(--color-border-strong) var(--color-bg);
@@ -25,6 +25,7 @@ body {
   margin: 0;
   min-height: 100vh;
   color: var(--color-text);
+  background: var(--color-bg);
   font-family: var(--font-body);
   font-size: var(--text-base);
   line-height: 1.6;
@@ -62,6 +63,20 @@ a {
   border-radius: var(--radius-sm);
 }
 
+/* Reading progress: a hairline across the top, driven by scroll position */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 40;
+  width: 100%;
+  height: 2px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+
 /* Page layout */
 .page {
   display: block;
@@ -72,8 +87,8 @@ a {
  * content scrolls past it. The offset under the sticky bar comes from html { scroll-padding-top }.
  */
 .section {
-  padding: clamp(4rem, 9vw, 8rem) var(--gutter);
-  border-top: var(--border-width) solid var(--color-border-strong);
+  padding: clamp(5rem, 11vw, 10rem) var(--gutter);
+  border-top: var(--border-width) solid var(--color-border);
 }
 
 .section__inner {
@@ -99,10 +114,11 @@ a {
 }
 
 .section__title {
-  font-size: var(--text-xl);
+  font-size: var(--text-lg);
   font-weight: 600;
-  line-height: 1.02;
-  letter-spacing: -0.035em;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text-muted);
 }
 
 /* Primitives */
@@ -147,13 +163,13 @@ a {
 }
 
 .chip-button:hover {
-  background: var(--color-bg-sunken);
+  background: var(--color-wash);
 }
 
 .chip-button[aria-pressed='true'] {
-  color: var(--color-bg);
-  background: var(--color-ink);
-  border-color: var(--color-ink);
+  color: var(--color-accent-contrast);
+  background: var(--color-text);
+  border-color: var(--color-text);
 }
 
 .arrow-icon {
@@ -169,18 +185,18 @@ a {
 }
 
 .button {
-  --btn-bg: var(--color-ink);
-  --btn-fg: var(--color-bg);
-  --btn-line: var(--color-ink);
+  --btn-bg: var(--color-accent);
+  --btn-fg: var(--color-accent-contrast);
+  --btn-line: var(--color-accent);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  min-height: 2.75rem;
+  min-height: 3rem;
   padding: 0 var(--space-5);
   font-family: var(--font-body);
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--btn-fg);
   text-decoration: none;
   background: var(--btn-bg);
@@ -195,56 +211,32 @@ a {
 .button:hover .arrow-icon,
 .work__open:hover .arrow-icon,
 .contact__link:hover .arrow-icon {
-  translate: 0.2rem 0;
+  translate: 0.25rem 0;
 }
 
 .button--primary:hover {
-  --btn-bg: var(--color-accent);
-  --btn-line: var(--color-accent);
-  --btn-fg: var(--color-accent-contrast);
+  --btn-bg: var(--color-text);
+  --btn-line: var(--color-text);
 }
 
 .button--ghost {
   --btn-bg: transparent;
   --btn-fg: var(--color-text);
+  --btn-line: var(--color-border-strong);
 }
 
 .button--ghost:hover {
-  --btn-bg: var(--color-bg-sunken);
+  --btn-bg: var(--color-wash);
 }
 
-/* On the green field the primary button is ink and turns ultramarine on hover */
-.section--hero .button--primary {
-  --btn-bg: var(--color-on-field);
-  --btn-fg: var(--color-field);
-  --btn-line: var(--color-on-field);
-}
-
-.section--hero .button--primary:hover {
-  --btn-bg: var(--color-accent);
-  --btn-line: var(--color-accent);
-  --btn-fg: var(--color-accent-contrast);
-}
-
-.section--hero .button--ghost {
-  --btn-fg: var(--color-on-field);
-  --btn-line: var(--color-border-on-field);
-}
-
-.section--hero .button--ghost:hover {
-  --btn-bg: var(--color-wash-on-field);
-}
-
-/* Hero: the committed field */
+/* Hero: the Core fills the frame, the name sits across the bottom */
 .section--hero {
   position: relative;
   display: flex;
   align-items: flex-end;
   min-height: calc(100svh - var(--nav-height));
-  padding-block: var(--space-7) clamp(3rem, 8vw, 6rem);
+  padding-block: var(--space-7) clamp(2.5rem, 6vw, 5rem);
   overflow: hidden;
-  color: var(--color-on-field);
-  background: var(--color-field);
   border-top: 0;
 }
 
@@ -252,21 +244,35 @@ a {
   position: relative;
   z-index: 1;
   width: 100%;
+  gap: var(--space-5);
 }
 
 .section--hero .section__title {
-  max-width: 8em;
   font-size: var(--text-2xl);
-  font-weight: 700;
-  line-height: 0.94;
-  letter-spacing: -0.04em;
+  font-weight: 800;
+  font-stretch: 75%;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+}
+
+.title-line {
+  display: block;
+  overflow: hidden;
+  /* room for descenders (the q) inside the mask */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.title-line__in {
+  display: inline-block;
 }
 
 .hero__copy {
   display: grid;
   gap: var(--space-4);
   justify-items: start;
-  max-width: 34rem;
+  max-width: 36rem;
 }
 
 .hero__role {
@@ -277,17 +283,34 @@ a {
 }
 
 .hero__tagline {
-  max-width: 26rem;
+  max-width: 28rem;
   font-size: var(--text-lg);
   line-height: 1.4;
-  color: var(--color-on-field-muted);
+  color: var(--color-text-muted);
 }
 
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-3);
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
   margin-top: var(--space-3);
+}
+
+.hero__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.hero__status::before {
+  content: '';
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--color-accent-3);
 }
 
 .hero__bg {
@@ -299,16 +322,16 @@ a {
 
 .hero__core {
   position: absolute;
-  top: 46%;
-  right: 3%;
-  width: min(54vw, 42rem);
+  top: 44%;
+  right: -2%;
+  width: min(72vw, 62rem);
   aspect-ratio: 1;
   transform: translateY(-50%);
   --core-opacity: 1;
   opacity: var(--core-opacity);
   /* Individual transform properties, so the parallax and the intro never fight the centring above */
-  translate: 0 calc(var(--parallax, 0) * 5rem);
-  scale: calc(1 - var(--parallax, 0) * 0.1);
+  translate: 0 calc(var(--parallax, 0) * 6rem);
+  scale: calc(1 - var(--parallax, 0) * 0.12);
 }
 
 .hero__core canvas {
@@ -317,21 +340,21 @@ a {
 
 @media (min-width: 48.01rem) and (max-width: 70rem) {
   .hero__core {
-    right: -4%;
-    width: 44vw;
+    right: -14%;
+    width: 78vw;
   }
 }
 
 @media (max-width: 48rem) {
   .hero__core {
     top: 30%;
-    right: -22%;
-    width: 96vw;
-    --core-opacity: 0.22;
+    right: -30%;
+    width: 110vw;
+    --core-opacity: 0.35;
   }
 }
 
-/* Static AI Core (fallback for no WebGL, reduced motion, or while the 3D chunk loads) */
+/* Static AI Core (fallback for no WebGL, reduced motion, or a failed 3D load) */
 .core-fallback {
   display: block;
   width: 100%;
@@ -355,50 +378,56 @@ a {
   fill: var(--scene-heart);
 }
 
-/* What I do: ruled rows, no cards */
+/* What I do: large type, ruled rows, no cards */
 .capabilities {
   margin: 0;
   padding: 0;
   list-style: none;
+  border-top: var(--border-width) solid var(--color-border-strong);
 }
 
 .capabilities > li {
   border-bottom: var(--border-width) solid var(--color-border);
 }
 
-.capabilities > li:first-child {
-  padding-top: 0;
-}
-
 .capability {
   display: grid;
-  gap: var(--space-2);
-  padding: var(--space-5) 0;
+  gap: var(--space-3);
+  padding: var(--space-6) 0;
 }
 
 @media (min-width: 48rem) {
   .capability {
-    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
-    gap: var(--space-6);
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-7);
   }
 }
 
 .capability__title {
-  font-size: var(--text-lg);
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-size: var(--text-xl);
+  font-weight: 700;
+  font-stretch: 80%;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.capability:hover .capability__title {
+  color: var(--color-accent);
 }
 
 .capability__text {
-  max-width: 40rem;
+  max-width: 34rem;
   color: var(--color-text-muted);
 }
 
-/* Selected work: one ruled row per project */
+/* Selected work: one big-type row per project; the others dim while one is in focus */
 .work-list {
   margin: 0;
   padding: 0;
   list-style: none;
+  border-top: var(--border-width) solid var(--color-border-strong);
 }
 
 .work-list > li {
@@ -407,8 +436,14 @@ a {
 
 .work {
   display: grid;
-  gap: var(--space-2);
+  gap: var(--space-3);
   padding: var(--space-6) 0;
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+
+.work-list:has(.work:hover) .work:not(:hover),
+.work-list:has(.work:focus-within) .work:not(:focus-within) {
+  opacity: 0.35;
 }
 
 @media (min-width: 48rem) {
@@ -419,6 +454,7 @@ a {
 }
 
 .work__period {
+  padding-top: 0.6rem;
   font-size: var(--text-sm);
   font-variant-numeric: tabular-nums;
   color: var(--color-text-muted);
@@ -431,27 +467,33 @@ a {
 }
 
 .work__title {
-  font-size: var(--text-lg);
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-size: var(--text-xl);
+  font-weight: 700;
+  font-stretch: 80%;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
 }
 
 .work__open {
   display: inline;
   padding: 0;
   font: inherit;
+  font-stretch: inherit;
   letter-spacing: inherit;
   text-align: left;
   color: var(--color-text);
   background: transparent;
   border: 0;
   cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out);
 }
 
 .work__open .arrow-icon {
   display: inline-block;
   margin-left: var(--space-2);
-  vertical-align: -0.1em;
+  width: 0.7em;
+  height: 0.7em;
+  vertical-align: -0.02em;
 }
 
 .work__open:hover {
@@ -459,7 +501,9 @@ a {
 }
 
 .work__pitch {
-  max-width: 40rem;
+  max-width: 38rem;
+  font-size: var(--text-lg);
+  line-height: 1.45;
 }
 
 .work__meta {
@@ -471,12 +515,12 @@ a {
 }
 
 .project-dialog {
-  width: min(40rem, calc(100% - 2 * var(--gutter)));
+  width: min(42rem, calc(100% - 2 * var(--gutter)));
   max-height: calc(100dvh - 2 * var(--gutter));
   padding: 0;
   color: var(--color-text);
   background: var(--color-bg-raised);
-  border: var(--border-width) solid var(--color-ink);
+  border: var(--border-width) solid var(--color-border-strong);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-lift);
 }
@@ -494,7 +538,8 @@ a {
 
 .project-dialog__title {
   font-size: var(--text-xl);
-  font-weight: 600;
+  font-weight: 700;
+  font-stretch: 80%;
   letter-spacing: -0.03em;
 }
 
@@ -523,32 +568,42 @@ a {
   list-style: none;
 }
 
-/* About: set as text */
+/* About: the first paragraphs light up word by word as you read down the page */
 .about {
   display: grid;
-  gap: var(--space-7);
+  gap: var(--space-8);
 }
 
 @media (min-width: 60rem) {
   .about {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
     align-items: start;
   }
 }
 
 .about__bio {
   display: grid;
-  gap: var(--space-4);
-  max-width: 38rem;
-  font-size: var(--text-lg);
-  line-height: 1.5;
+  gap: var(--space-5);
+  max-width: 40rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 1.05rem + 1.2vw, 2rem);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+.scroll-words[data-live='true'] .scroll-word {
+  opacity: clamp(0.4, calc(0.4 + (var(--p, 1) - var(--i)) * 14), 1);
 }
 
 .about__focus {
   display: grid;
   gap: var(--space-2);
   margin-top: var(--space-3);
+  font-family: var(--font-body);
   font-size: var(--text-base);
+  font-weight: 400;
+  letter-spacing: 0;
 }
 
 .about__focus-list {
@@ -596,12 +651,10 @@ a {
   font-size: var(--text-sm);
 }
 
-/* Contact: the closing band */
+/* Contact: the close */
 .section--contact {
-  min-height: 70vh;
-  color: var(--color-on-ink);
-  background: var(--color-ink);
-  border-top: 0;
+  min-height: 80vh;
+  background: var(--color-bg-sunken);
 }
 
 .contact {
@@ -613,24 +666,26 @@ a {
 .contact__intro {
   max-width: 32rem;
   font-size: var(--text-lg);
-  color: var(--color-on-ink-muted);
+  color: var(--color-text-muted);
 }
 
 .contact__email {
   font-family: var(--font-display);
-  font-size: clamp(1.35rem, 0.6rem + 4.2vw, 3.5rem);
-  font-weight: 600;
-  line-height: 1.1;
+  font-size: clamp(1.5rem, 0.5rem + 5vw, 4.5rem);
+  font-weight: 700;
+  font-stretch: 80%;
+  line-height: 1.05;
   letter-spacing: -0.03em;
   overflow-wrap: anywhere;
-  color: var(--color-on-ink);
-  text-decoration-thickness: 0.08em;
-  text-underline-offset: 0.18em;
+  color: var(--color-text);
+  text-decoration-thickness: 0.06em;
+  text-decoration-color: var(--color-accent);
+  text-underline-offset: 0.16em;
   transition: color var(--duration-fast) var(--ease-out);
 }
 
 .contact__email:hover {
-  color: var(--scene-heart);
+  color: var(--color-accent);
 }
 
 .contact__links {
@@ -648,13 +703,13 @@ a {
   gap: var(--space-2);
   min-height: 2.75rem;
   font-weight: 600;
-  color: var(--color-on-ink);
+  color: var(--color-text);
 }
 
 .footer {
-  color: var(--color-on-ink-muted);
+  color: var(--color-text-muted);
   font-size: var(--text-sm);
-  background: var(--color-ink);
+  background: var(--color-bg-sunken);
 }
 
 .footer__inner {
@@ -665,35 +720,14 @@ a {
   max-width: var(--content-width);
   margin: 0 auto;
   padding: var(--space-5) var(--gutter);
-  border-top: var(--border-width) solid var(--color-border-on-ink);
+  border-top: var(--border-width) solid var(--color-border);
 }
 
 .footer a {
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
-  color: var(--color-on-ink);
-}
-
-/* Focus ring and selection on the coloured fields */
-.section--hero :focus-visible {
-  outline-color: var(--color-on-field);
-}
-
-.section--contact :focus-visible,
-.footer :focus-visible {
-  outline-color: var(--color-on-ink);
-}
-
-.section--hero ::selection {
-  color: var(--color-field);
-  background: var(--color-on-field);
-}
-
-.section--contact ::selection,
-.footer ::selection {
-  color: var(--color-ink);
-  background: var(--color-on-ink);
+  color: var(--color-text);
 }
 
 /* Toolkit */
@@ -821,15 +855,15 @@ a {
   font-weight: 500;
   white-space: nowrap;
   color: var(--color-text);
-  background: var(--color-bg-raised);
+  background: var(--color-bg);
   border: var(--border-width) solid var(--color-border-strong);
   border-radius: var(--radius-sm);
 }
 
 .tech-label--active {
   color: var(--color-accent-contrast);
-  background: var(--color-ink);
-  border-color: var(--color-ink);
+  background: var(--color-text);
+  border-color: var(--color-text);
 }
 
 .tech-cluster {
@@ -853,7 +887,7 @@ a {
   z-index: 20;
   height: var(--nav-height);
   background: var(--color-bg);
-  border-bottom: var(--border-width) solid var(--color-border-strong);
+  border-bottom: var(--border-width) solid var(--color-border);
 }
 
 .site-nav__inner {
@@ -874,8 +908,9 @@ a {
   min-height: 2.75rem;
   font-family: var(--font-display);
   font-size: var(--text-lg);
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-weight: 800;
+  font-stretch: 80%;
+  letter-spacing: -0.02em;
   color: var(--color-text);
   text-decoration: none;
 }
@@ -1010,7 +1045,7 @@ a {
   max-height: 26rem;
   padding: var(--space-4);
   overflow-y: auto;
-  background: var(--color-bg);
+  background: var(--color-bg-sunken);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-sm);
 }
@@ -1033,12 +1068,12 @@ a {
 
 .assistant__message--user {
   justify-self: end;
-  color: var(--color-bg);
-  background: var(--color-ink);
+  color: var(--color-accent-contrast);
+  background: var(--color-text);
 }
 
 .assistant__message--user .label {
-  color: var(--color-on-ink-muted);
+  color: var(--color-bg-raised);
 }
 
 .assistant__message--lab {
@@ -1066,7 +1101,7 @@ a {
   font-family: var(--font-body);
   font-size: var(--text-base);
   color: var(--color-text);
-  background: var(--color-bg-raised);
+  background: var(--color-bg-sunken);
   border: var(--border-width) solid var(--color-border-strong);
   border-radius: var(--radius-sm);
 }
@@ -1165,9 +1200,9 @@ button.assistant__link {
   position: absolute;
   top: var(--space-2);
   left: var(--space-2);
-  z-index: 30;
+  z-index: 50;
   padding: var(--space-3) var(--space-4);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-accent-contrast);
   background: var(--color-accent);
   border-radius: var(--radius-sm);
@@ -1189,7 +1224,13 @@ button.assistant__link {
 /* stops all of it (rules in tokens.css).                              */
 /* ------------------------------------------------------------------ */
 
-/* The one orchestrated moment: the hero intro (about 1 second in total) */
+/* The one orchestrated moment: the hero intro (about 1.3 seconds in total) */
+@keyframes line-rise {
+  from {
+    transform: translateY(105%);
+  }
+}
+
 @keyframes intro-rise {
   from {
     opacity: 0;
@@ -1200,16 +1241,20 @@ button.assistant__link {
 @keyframes intro-core {
   from {
     opacity: 0;
-    scale: 0.92;
+    scale: 0.9;
   }
 }
 
 .hero__core {
-  animation: intro-core var(--duration-deliberate) var(--ease-out) calc(var(--stagger) * 3) backwards;
+  animation: intro-core var(--duration-deliberate) var(--ease-out) calc(var(--stagger) * 2) backwards;
 }
 
-.section--hero .section__title {
-  animation: intro-rise var(--duration-slow) var(--ease-out) backwards;
+.title-line__in {
+  animation: line-rise var(--duration-deliberate) var(--ease-out) backwards;
+}
+
+.title-line:nth-child(2) .title-line__in {
+  animation-delay: var(--stagger);
 }
 
 .hero__copy > * {
@@ -1217,11 +1262,11 @@ button.assistant__link {
 }
 
 .hero__copy > :nth-child(1) {
-  animation-delay: calc(var(--stagger) * 2);
+  animation-delay: calc(var(--stagger) * 4);
 }
 
 .hero__copy > :nth-child(2) {
-  animation-delay: calc(var(--stagger) * 4);
+  animation-delay: calc(var(--stagger) * 5);
 }
 
 .hero__copy > :nth-child(3) {
@@ -1231,15 +1276,15 @@ button.assistant__link {
 /* Quiet reveals as sections scroll into view; each happens once */
 .reveal--hidden {
   opacity: 0;
-  transform: translateY(1rem);
+  transform: translateY(1.5rem);
 }
 
 .reveal--in {
   opacity: 1;
   transform: none;
   transition:
-    opacity var(--duration-base) var(--ease-out),
-    transform var(--duration-base) var(--ease-out);
+    opacity var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out);
 }
 
 /* The 3D scenes fade in once ready, so a scene never pops into place */

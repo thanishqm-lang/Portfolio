@@ -4,6 +4,7 @@ import { CapabilityCards } from './components/CapabilityCards';
 import { ContactBody, SiteFooter } from './components/ContactBody';
 import { HeroBackground, HeroBody } from './components/HeroBody';
 import { ProjectPanels } from './components/ProjectPanels';
+import { ScrollProgress } from './components/ScrollProgress';
 import { Reveal } from './components/Reveal';
 import { Section } from './components/Section';
 import { SiteNav } from './components/SiteNav';
@@ -57,6 +58,7 @@ export function App() {
       <a className="skip-link" href="#main">
         {UI.skipToContent}
       </a>
+      <ScrollProgress />
       <SiteNav />
       <main id="main" tabIndex={-1} className="page">
         {SECTIONS.map((section, index) => (

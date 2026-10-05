@@ -7,4 +7,6 @@ export const HERO = {
   tagline: 'Making software reliable, release after release.',
   emailAction: 'Email me',
   workAction: 'See my work',
+  /** Stated by the owner (NS-30); the place comes from the résumé. */
+  status: 'Open to work, Hyderabad, India',
 } as const;

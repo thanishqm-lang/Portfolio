@@ -28,9 +28,12 @@ Reduced motion zeroes every duration and sets `animation: none` and `transition:
 
 | Where | Pattern | How | Reduced-motion path |
 | --- | --- | --- | --- |
-| Hero (name, role, tagline, actions, Core) | Orchestrated intro, staggered rise/fade, Core fades and scales in | CSS keyframes with `backwards` fill (default CSS is the end state) | No animation; everything simply shown |
+| Hero (name, role, tagline, actions, Core) | Orchestrated intro: the name lifts into view line by line from a mask, the rest rises in a stagger, the Core fades and scales in | CSS keyframes with `backwards` fill (default CSS is the end state) | No animation; everything simply shown |
 | Hero Core (3D) | Spins and pulses for about 5 seconds, then settles; follows the cursor; shrinks and drifts as the hero scrolls away | React Three Fiber `useFrame` with `idleSpeed()`, CSS `translate`/`scale` from `--parallax` | Static SVG Core instead of the 3D scene |
 | Section headings, rows, toolkit, About, assistant, Contact | Reveal once on scroll: fade and rise 1 rem, 40 ms stagger | `Reveal` component (IntersectionObserver); only content below the fold gets a start state | Shown at once |
+| Reading progress line | A 2 px line across the top fills as you scroll (scroll position only) | ScrollProgress, one 	ransform per frame | Still shown; it is an indicator, not movement |
+| About paragraphs | Words brighten one after another as the paragraph scrolls up the screen (opacity only; text is real from the start) | ScrollWords | Everything fully visible |
+| Work rows | The other rows dim while one is hovered or focused | CSS :has(), opacity at ase | No transition |
 | Work rows, contact links, buttons | Arrow nudges 0.2 rem on hover; colour change | CSS `translate` and colour at `fast` | No movement |
 | Project dialog | Fade and rise on open; backdrop fades | CSS keyframes at `base` | Appears at once |
 | Mobile menu | Fade and slide down on open | CSS keyframes at `fast` | Appears at once |
@@ -47,6 +50,10 @@ Reduced motion zeroes every duration and sets `animation: none` and `transition:
 ## Redesign note (2026-10-05)
 
 The owner asked for the on-page **Pause animations** button to be removed. WCAG 2.2.2 asks for a way to stop moving content that starts by itself and lasts more than five seconds, so the loops that needed the button were removed instead: the perspective grid was deleted, and the Core and toolkit spins now settle on their own. With no looping content the control is not needed, and the OS reduced-motion setting still stops everything.
+
+## Look (2026-10-05, second redesign)
+
+The owner chose dark and cinematic but refined: warm black, ivory type, one vermilion signal colour, no glows. The 3D scenes fade in once ready instead of swapping from a flat fallback. Display type is Bricolage Grotesque at 75-80% width.
 
 ## Gate
 

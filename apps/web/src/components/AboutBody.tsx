@@ -1,6 +1,7 @@
 import { EXPERIENCE } from '../content/experience';
 import { PROFILE } from '../content/profile';
 import { UI } from '../content/ui';
+import { ScrollWords } from './ScrollWords';
 import { Label } from './ui';
 
 /** Bio, focus areas, experience and education, all from content. Set as text, no avatar. */
@@ -10,7 +11,7 @@ export function AboutBody() {
     <div className="about">
       <div className="about__bio">
         {about.paragraphs.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
+          <ScrollWords key={paragraph} text={paragraph} />
         ))}
         <div className="about__focus">
           <Label>{UI.focusHeading}</Label>

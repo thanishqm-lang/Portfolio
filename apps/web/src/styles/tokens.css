@@ -2,52 +2,42 @@
  * Design tokens: the ONLY place raw colour values live (tenet 7).
  * Components and stylesheets reference these variables, never hex literals.
  *
- * World: a printed inspection sheet. Cool lab paper and near-black ink, an acid "pass" green
- * field for the opening, ultramarine for links and selection, and one orange mark for the defect found.
+ * World: a darkened inspection room. Warm black, ivory type, hairline rules, and one vermilion
+ * signal colour for the thing that matters (the defect found, the action to take). No glows.
  */
 :root {
-  /* Surfaces and ink */
-  --color-bg: #f2f4f1; /* lab paper */
-  --color-bg-raised: #ffffff;
-  --color-bg-sunken: #e6ebe6;
-  --color-ink: #0c1411; /* the closing band and primary buttons */
-  --color-text: #0c1411;
-  --color-text-muted: #4b5852;
+  /* Surfaces: warm blacks */
+  --color-bg: #0b0b0d;
+  --color-bg-raised: #131316;
+  --color-bg-sunken: #070708;
 
-  /* Ultramarine carries links, focus and selected states on the paper */
-  --color-accent: #2236ff;
-  --color-accent-contrast: #ffffff; /* text on top of an accent fill */
+  /* Type: ivory, with a quieter tone for secondary text */
+  --color-text: #efece4;
+  --color-text-muted: #a3a29c;
 
-  /* The opening: an acid "pass" green field with ink type */
-  --color-field: #c9f31d;
-  --color-on-field: #0c1411; /* text on the field */
-  --color-on-field-muted: #243b0c; /* secondary text on the field */
+  /* The signal colour: actions, links, focus, the current section */
+  --color-accent: #ff5a2c;
+  --color-accent-contrast: #0b0b0d; /* text on top of an accent fill */
 
-  /* The closing band: ink with white type */
-  --color-on-ink: #ffffff;
-  --color-on-ink-muted: #b5c0ba;
-
-  /* Category colours for the toolkit; each is dark enough for text on the paper */
-  --color-accent-2: #c2410c;
-  --color-accent-3: #15803d;
-  --color-accent-4: #be185d;
-  --color-accent-5: #8a5a00;
+  /* Category colours for the toolkit; each reads as text on the dark ground */
+  --color-accent-2: #f2c14e;
+  --color-accent-3: #6fd3a0;
+  --color-accent-4: #8fa8ff;
+  --color-accent-5: #e993c8;
 
   /* Lines */
-  --color-border: rgb(12 20 17 / 0.16);
-  --color-border-strong: rgb(12 20 17 / 0.62);
-  --color-border-on-field: rgb(12 20 17 / 0.62);
-  --color-border-on-ink: rgb(255 255 255 / 0.18);
-  --color-wash-on-field: rgb(12 20 17 / 0.1); /* hover fill for outlined buttons on the field */
-  --color-scrim: rgb(12 20 17 / 0.6); /* behind the project dialog */
+  --color-border: rgb(239 236 228 / 0.14);
+  --color-border-strong: rgb(239 236 228 / 0.5);
+  --color-wash: rgb(239 236 228 / 0.07); /* hover fill */
+  --color-scrim: rgb(0 0 0 / 0.72); /* behind the project dialog */
 
-  /* The 3D Core on the field: ink line work, a blue inner lattice and one orange mark */
-  --scene-line: #0c1411;
-  --scene-line-2: #2236ff;
-  --scene-heart: #ff4d1f; /* the one warm mark: the defect found */
+  /* The 3D Core: ivory line work, a vermilion inner lattice and a vermilion heart */
+  --scene-line: #efece4;
+  --scene-line-2: #ff5a2c;
+  --scene-heart: #ff5a2c;
 
   /* Elevation: a real offset and blur, used only for the dialog */
-  --shadow-lift: 0 2px 4px rgb(12 20 17 / 0.08), 0 24px 48px -16px rgb(12 20 17 / 0.35);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.5), 0 32px 64px -16px rgb(0 0 0 / 0.8);
 
   /* Spacing (4px scale) */
   --space-1: 0.25rem;
@@ -60,7 +50,7 @@
   --space-8: 4.5rem;
   --space-9: 7rem;
 
-  /* Radius: nearly square, like a printed form */
+  /* Radius: nearly square */
   --radius-sm: 2px;
   --radius-md: 4px;
 
@@ -72,8 +62,8 @@
   --duration-fast: 150ms; /* state changes, exits, small entrances */
   --duration-base: 300ms; /* section reveals, dialogs */
   --duration-slow: 600ms; /* hero text */
-  --duration-deliberate: 700ms; /* the one orchestrated moment: the hero intro */
-  --stagger: 40ms; /* gap between siblings in an entrance; cap at 8 items */
+  --duration-deliberate: 900ms; /* the one orchestrated moment: the hero intro */
+  --stagger: 80ms; /* gap between siblings in an entrance; cap at 8 items */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* Type: two voices, self-hosted, with system fallbacks (tenet 5) */
@@ -84,12 +74,12 @@
   --text-sm: 0.9375rem;
   --text-base: 1.0625rem;
   --text-lg: 1.375rem;
-  --text-xl: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
-  --text-2xl: clamp(3.25rem, 1.6rem + 7.4vw, 6rem);
+  --text-xl: clamp(2.25rem, 1.4rem + 3.4vw, 4rem);
+  --text-2xl: clamp(3.5rem, 1.2rem + 10.5vw, 9rem);
 
   /* Layout */
   --nav-height: 3.75rem;
-  --content-width: 80rem;
+  --content-width: 82rem;
   --gutter: clamp(1.25rem, 4vw, 3rem);
 }
 

@@ -112,37 +112,30 @@ const ratio = (a, b) => {
 const bg = hex('--color-bg');
 const raised = hex('--color-bg-raised');
 const sunken = hex('--color-bg-sunken');
-const ink = hex('--color-ink');
+const text = hex('--color-text');
 const accent = hex('--color-accent');
-const field = hex('--color-field');
-const onField = hex('--color-on-field');
-const white = hex('--color-on-ink');
-const inputBorder = over(rgba('--color-border-strong'), bg);
-const ghostBorder = over(rgba('--color-border-on-field'), field);
+const onAccent = hex('--color-accent-contrast');
+const inputBorder = over(rgba('--color-border-strong'), sunken);
+const cardBorder = over(rgba('--color-border-strong'), bg);
 
 const checks = [
-  ['text on page', hex('--color-text'), bg, 4.5],
+  ['text on page', text, bg, 4.5],
   ['muted text on page', hex('--color-text-muted'), bg, 4.5],
   ['muted text on the sunken surface', hex('--color-text-muted'), sunken, 4.5],
-  ['text on raised surfaces', hex('--color-text'), raised, 4.5],
-  ['accent (links, focus) on page', accent, bg, 4.5],
-  ['accent on raised surfaces', accent, raised, 4.5],
-  ['text on the green field', onField, field, 4.5],
-  ['secondary text on the green field', hex('--color-on-field-muted'), field, 4.5],
-  ['primary button on the field: field-coloured text on ink', field, onField, 4.5],
-  ['primary button hover on the field: white on accent', hex('--color-accent-contrast'), accent, 4.5],
-  ['orange mark on the green field (non-text, 1.4.11)', hex('--scene-heart'), field, 1.5],
-  ['button text on accent', hex('--color-accent-contrast'), accent, 4.5],
-  ['text on the ink band', white, ink, 4.5],
-  ['secondary text on the ink band', hex('--color-on-ink-muted'), ink, 4.5],
-  ['warm mark on the ink band (email hover)', hex('--scene-heart'), ink, 4.5],
-  ['page text on ink buttons and pressed chips', bg, ink, 4.5],
-  ['input border on page (1.4.11)', inputBorder, bg, 3],
-  ['outlined button border on the green field (1.4.11)', ghostBorder, field, 3],
+  ['muted text on raised surfaces', hex('--color-text-muted'), raised, 4.5],
+  ['text on raised surfaces', text, raised, 4.5],
+  ['signal colour (links, focus) on page', accent, bg, 4.5],
+  ['signal colour on the sunken surface', accent, sunken, 4.5],
+  ['signal colour on raised surfaces', accent, raised, 4.5],
+  ['button text on the signal colour', onAccent, accent, 4.5],
+  ['dark text on ivory fills (pressed chips, your messages)', onAccent, text, 4.5],
+  ['input border on its field (1.4.11)', inputBorder, sunken, 3],
+  ['control borders on page (1.4.11)', cardBorder, bg, 3],
 ];
 for (const name of ['--color-accent', '--color-accent-2', '--color-accent-3', '--color-accent-4', '--color-accent-5']) {
   checks.push([`category colour ${name} as text on page`, hex(name), bg, 4.5]);
-  checks.push([`white text on category colour ${name} (selected tool)`, white, hex(name), 4.5]);
+  checks.push([`category colour ${name} as text on raised surfaces`, hex(name), raised, 4.5]);
+  checks.push([`dark text on category colour ${name} (selected tool)`, onAccent, hex(name), 4.5]);
 }
 for (const [label, fg, back, need] of checks) {
   const r = ratio(fg, back);
