@@ -54,3 +54,9 @@ A single-page, cinematic 3D personal portfolio for **Sri Thanishq Manda** (site 
 - Bug found and fixed on the way: jumps from the navigation landed 144 px down because `scroll-margin-top` on `.section` and `html { scroll-padding-top }` both applied, so the previous nav link stayed highlighted. Only `scroll-padding-top` remains.
 - Decisions: the platform and client names are never shown (hidden by the owner); GitHub profile link added; share image is the dark lab Core (regenerate with `node scripts/make-og-image.mjs`).
 - Still open: FND-04 (remove the old dashboard code, needs owner approval), optional WORK-02/TECH-02/MOT-03, custom domain (REL-05). Redeploy happens automatically when the owner pushes to `main`.
+
+## Redesign (2026-10-05)
+- The owner installed the Impeccable plugin (pbakaus/impeccable 4.5.0) and asked for a redesign because the dark neon look read as AI-generated, and for the **Pause animations** button to be removed.
+- Direction chosen by the owner: light and editorial, keep both 3D scenes. Built as: lab-paper ground, near-black ink, one ultramarine field for the hero (the Core is white line work with one orange "defect" dot), ruled rows instead of cards, sticky heading column, dark closing band with the email set large. Fonts: Bricolage Grotesque (display) and Hanken Grotesk (body). The product record is in the chat only (PRODUCT.md and DESIGN.md were not written).
+- Pause button removed on purpose. To stay within WCAG 2.2.2 nothing loops by itself: the hero grid was deleted and the 3D spins settle after about 5 s (`src/three/idleSpeed.ts`). See `docs/design/motion.md`.
+- Gates after the redesign: lint, typecheck, build (entry 76.6 KB gz), assistant 33/33, motion-check 18 animations / 0 violations, contrast gate 26 pairs; local Lighthouse desktop 100 / phone 98 / accessibility 100.
