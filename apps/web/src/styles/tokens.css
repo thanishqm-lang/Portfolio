@@ -2,9 +2,8 @@
  * Design tokens: the ONLY place raw colour values live (tenet 7).
  * Components and stylesheets reference these variables, never hex literals.
  *
- * World: a printed inspection sheet. Cool lab paper, near-black green ink, and one committed
- * ultramarine that fills the opening and the accents. Orange is the "defect found" mark and is
- * used sparingly.
+ * World: a printed inspection sheet. Cool lab paper and near-black ink, an acid "pass" green
+ * field for the opening, ultramarine for links and selection, and one orange mark for the defect found.
  */
 :root {
   /* Surfaces and ink */
@@ -15,12 +14,18 @@
   --color-text: #0c1411;
   --color-text-muted: #4b5852;
 
-  /* The committed colour: fills the opening, carries links and focus */
+  /* Ultramarine carries links, focus and selected states on the paper */
   --color-accent: #2236ff;
   --color-accent-contrast: #ffffff; /* text on top of an accent fill */
-  --color-on-field: #ffffff; /* text on the accent field and on ink */
-  --color-on-field-muted: #dfe3ff; /* secondary text on the accent field */
-  --color-on-ink-muted: #b5c0ba; /* secondary text on the ink band */
+
+  /* The opening: an acid "pass" green field with ink type */
+  --color-field: #c9f31d;
+  --color-on-field: #0c1411; /* text on the field */
+  --color-on-field-muted: #243b0c; /* secondary text on the field */
+
+  /* The closing band: ink with white type */
+  --color-on-ink: #ffffff;
+  --color-on-ink-muted: #b5c0ba;
 
   /* Category colours for the toolkit; each is dark enough for text on the paper */
   --color-accent-2: #c2410c;
@@ -31,15 +36,15 @@
   /* Lines */
   --color-border: rgb(12 20 17 / 0.16);
   --color-border-strong: rgb(12 20 17 / 0.62);
-  --color-border-on-field: rgb(255 255 255 / 0.55);
+  --color-border-on-field: rgb(12 20 17 / 0.62);
   --color-border-on-ink: rgb(255 255 255 / 0.18);
-  --color-wash-on-field: rgb(255 255 255 / 0.14); /* hover fill for outlined buttons on the field */
+  --color-wash-on-field: rgb(12 20 17 / 0.1); /* hover fill for outlined buttons on the field */
   --color-scrim: rgb(12 20 17 / 0.6); /* behind the project dialog */
 
-  /* The 3D Core on the accent field */
-  --scene-line: #ffffff;
-  --scene-line-2: #b9c3ff;
-  --scene-heart: #ff6a3d; /* the one warm mark: the defect found */
+  /* The 3D Core on the field: ink line work, a blue inner lattice and one orange mark */
+  --scene-line: #0c1411;
+  --scene-line-2: #2236ff;
+  --scene-heart: #ff4d1f; /* the one warm mark: the defect found */
 
   /* Elevation: a real offset and blur, used only for the dialog */
   --shadow-lift: 0 2px 4px rgb(12 20 17 / 0.08), 0 24px 48px -16px rgb(12 20 17 / 0.35);

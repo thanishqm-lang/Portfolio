@@ -28,7 +28,7 @@ if (browser === undefined) {
 const tokens = readFileSync(join(root, 'apps/web/src/styles/tokens.css'), 'utf8');
 const token = (name) => tokens.match(new RegExp(`${name}:\\s*(#[0-9a-fA-F]{6})`))?.[1] ?? '#ffffff';
 const color = {
-  field: token('--color-accent'),
+  field: token('--color-field'),
   text: token('--color-on-field'),
   muted: token('--color-on-field-muted'),
   line: token('--scene-line'),

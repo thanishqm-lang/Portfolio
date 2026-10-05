@@ -114,9 +114,11 @@ const raised = hex('--color-bg-raised');
 const sunken = hex('--color-bg-sunken');
 const ink = hex('--color-ink');
 const accent = hex('--color-accent');
-const white = hex('--color-on-field');
+const field = hex('--color-field');
+const onField = hex('--color-on-field');
+const white = hex('--color-on-ink');
 const inputBorder = over(rgba('--color-border-strong'), bg);
-const ghostBorder = over(rgba('--color-border-on-field'), accent);
+const ghostBorder = over(rgba('--color-border-on-field'), field);
 
 const checks = [
   ['text on page', hex('--color-text'), bg, 4.5],
@@ -125,16 +127,18 @@ const checks = [
   ['text on raised surfaces', hex('--color-text'), raised, 4.5],
   ['accent (links, focus) on page', accent, bg, 4.5],
   ['accent on raised surfaces', accent, raised, 4.5],
-  ['text on the accent field', white, accent, 4.5],
-  ['secondary text on the accent field', hex('--color-on-field-muted'), accent, 4.5],
-  ['primary button on the field: accent text on white', accent, white, 4.5],
+  ['text on the green field', onField, field, 4.5],
+  ['secondary text on the green field', hex('--color-on-field-muted'), field, 4.5],
+  ['primary button on the field: field-coloured text on ink', field, onField, 4.5],
+  ['primary button hover on the field: white on accent', hex('--color-accent-contrast'), accent, 4.5],
+  ['orange mark on the green field (non-text, 1.4.11)', hex('--scene-heart'), field, 1.5],
   ['button text on accent', hex('--color-accent-contrast'), accent, 4.5],
   ['text on the ink band', white, ink, 4.5],
   ['secondary text on the ink band', hex('--color-on-ink-muted'), ink, 4.5],
   ['warm mark on the ink band (email hover)', hex('--scene-heart'), ink, 4.5],
   ['page text on ink buttons and pressed chips', bg, ink, 4.5],
   ['input border on page (1.4.11)', inputBorder, bg, 3],
-  ['outlined button border on the accent field (1.4.11)', ghostBorder, accent, 3],
+  ['outlined button border on the green field (1.4.11)', ghostBorder, field, 3],
 ];
 for (const name of ['--color-accent', '--color-accent-2', '--color-accent-3', '--color-accent-4', '--color-accent-5']) {
   checks.push([`category colour ${name} as text on page`, hex(name), bg, 4.5]);

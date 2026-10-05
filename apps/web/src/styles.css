@@ -213,17 +213,17 @@ a {
   --btn-bg: var(--color-bg-sunken);
 }
 
-/* On the accent field the buttons are paper-coloured */
+/* On the green field the primary button is ink and turns ultramarine on hover */
 .section--hero .button--primary {
   --btn-bg: var(--color-on-field);
-  --btn-fg: var(--color-accent);
+  --btn-fg: var(--color-field);
   --btn-line: var(--color-on-field);
 }
 
 .section--hero .button--primary:hover {
-  --btn-bg: var(--color-on-field-muted);
-  --btn-line: var(--color-on-field-muted);
-  --btn-fg: var(--color-accent);
+  --btn-bg: var(--color-accent);
+  --btn-line: var(--color-accent);
+  --btn-fg: var(--color-accent-contrast);
 }
 
 .section--hero .button--ghost {
@@ -244,7 +244,7 @@ a {
   padding-block: var(--space-7) clamp(3rem, 8vw, 6rem);
   overflow: hidden;
   color: var(--color-on-field);
-  background: var(--color-accent);
+  background: var(--color-field);
   border-top: 0;
 }
 
@@ -315,12 +315,19 @@ a {
   display: block;
 }
 
+@media (min-width: 48.01rem) and (max-width: 70rem) {
+  .hero__core {
+    right: -4%;
+    width: 44vw;
+  }
+}
+
 @media (max-width: 48rem) {
   .hero__core {
     top: 30%;
     right: -22%;
     width: 96vw;
-    --core-opacity: 0.4;
+    --core-opacity: 0.22;
   }
 }
 
@@ -592,7 +599,7 @@ a {
 /* Contact: the closing band */
 .section--contact {
   min-height: 70vh;
-  color: var(--color-on-field);
+  color: var(--color-on-ink);
   background: var(--color-ink);
   border-top: 0;
 }
@@ -616,7 +623,7 @@ a {
   line-height: 1.1;
   letter-spacing: -0.03em;
   overflow-wrap: anywhere;
-  color: var(--color-on-field);
+  color: var(--color-on-ink);
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.18em;
   transition: color var(--duration-fast) var(--ease-out);
@@ -641,7 +648,7 @@ a {
   gap: var(--space-2);
   min-height: 2.75rem;
   font-weight: 600;
-  color: var(--color-on-field);
+  color: var(--color-on-ink);
 }
 
 .footer {
@@ -665,21 +672,28 @@ a {
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
-  color: var(--color-on-field);
+  color: var(--color-on-ink);
 }
 
-/* Focus ring on the dark fields */
-.section--hero :focus-visible,
-.section--contact :focus-visible,
-.footer :focus-visible {
+/* Focus ring and selection on the coloured fields */
+.section--hero :focus-visible {
   outline-color: var(--color-on-field);
 }
 
-.section--hero ::selection,
+.section--contact :focus-visible,
+.footer :focus-visible {
+  outline-color: var(--color-on-ink);
+}
+
+.section--hero ::selection {
+  color: var(--color-field);
+  background: var(--color-on-field);
+}
+
 .section--contact ::selection,
 .footer ::selection {
-  color: var(--color-accent);
-  background: var(--color-on-field);
+  color: var(--color-ink);
+  background: var(--color-on-ink);
 }
 
 /* Toolkit */
@@ -1226,6 +1240,18 @@ button.assistant__link {
   transition:
     opacity var(--duration-base) var(--ease-out),
     transform var(--duration-base) var(--ease-out);
+}
+
+/* The 3D scenes fade in once ready, so a scene never pops into place */
+@keyframes scene-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.hero__core canvas,
+.tech__scene canvas {
+  animation: scene-in var(--duration-slow) var(--ease-out) backwards;
 }
 
 /* Short entrances */

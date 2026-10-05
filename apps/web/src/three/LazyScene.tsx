@@ -47,15 +47,19 @@ export function LazyScene({ render, fallback, className }: LazySceneProps) {
   const webgl = useMemo(() => detectWebGL(), []);
   const { inView, seen } = useInView(ref);
   const idle = useWhenIdle();
-  const use3D = webgl && !reducedMotion && seen && idle;
+  // The 3D scene is expected on a capable device with motion allowed. While it is still loading
+  // the container stays empty, so the flat fallback never flashes and then jumps to the 3D version;
+  // the scene fades in when it is ready. The fallback shows at once where 3D will never appear.
+  const expects3D = webgl && !reducedMotion;
+  const use3D = expects3D && seen && idle;
 
   return (
     <div ref={ref} className={className} aria-hidden="true">
       {use3D ? (
         <SceneBoundary fallback={fallback}>
-          <Suspense fallback={fallback}>{render(inView)}</Suspense>
+          <Suspense fallback={null}>{render(inView)}</Suspense>
         </SceneBoundary>
-      ) : (
+      ) : expects3D ? null : (
         fallback
       )}
     </div>

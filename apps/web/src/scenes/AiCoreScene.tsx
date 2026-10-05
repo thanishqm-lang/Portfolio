@@ -1,41 +1,19 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { AdditiveBlending, Color, type Group, type Mesh } from 'three';
+import type { Group, Mesh } from 'three';
 import { SceneCanvas } from '../three/SceneCanvas';
 import type { SceneProps } from '../three/LazyScene';
 import { idleSpeed } from '../three/idleSpeed';
 import { readCssToken } from '../three/tokens';
 
-const GLOW_VERTEX = /* glsl */ `
-  varying vec3 vNormal;
-  varying vec3 vView;
-  void main() {
-    vNormal = normalize(normalMatrix * normal);
-    vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
-    vView = normalize(-viewPosition.xyz);
-    gl_Position = projectionMatrix * viewPosition;
-  }
-`;
-
-const GLOW_FRAGMENT = /* glsl */ `
-  uniform vec3 uColor;
-  varying vec3 vNormal;
-  varying vec3 vView;
-  void main() {
-    float rim = pow(1.0 - abs(dot(vNormal, vView)), 2.4);
-    gl_FragColor = vec4(uColor, rim * 0.85);
-  }
-`;
-
 /**
- * The AI Core on the accent field: a warm heart inside two wireframe lattices and three rings. It spins
+ * The AI Core on the green field: a warm heart inside two wireframe lattices and three rings. It spins
  * and pulses for a few seconds, then settles; it keeps following the cursor.
  */
 function AiCore() {
   const line = useMemo(() => readCssToken('--scene-line'), []);
   const line2 = useMemo(() => readCssToken('--scene-line-2'), []);
   const heartColor = useMemo(() => readCssToken('--scene-heart'), []);
-  const glowUniforms = useMemo(() => ({ uColor: { value: new Color(heartColor) } }), [heartColor]);
 
   const tilt = useRef<Group>(null);
   const lattice = useRef<Group>(null);
@@ -90,7 +68,6 @@ function AiCore() {
             wireframe
             transparent
             opacity={0.55}
-            blending={AdditiveBlending}
             depthWrite={false}
           />
         </mesh>
@@ -101,7 +78,6 @@ function AiCore() {
             wireframe
             transparent
             opacity={0.7}
-            blending={AdditiveBlending}
             depthWrite={false}
           />
         </mesh>
@@ -110,18 +86,6 @@ function AiCore() {
       <mesh ref={heart}>
         <sphereGeometry args={[0.5, 32, 32]} />
         <meshBasicMaterial color={heartColor} />
-      </mesh>
-
-      <mesh scale={1.3}>
-        <sphereGeometry args={[0.9, 48, 48]} />
-        <shaderMaterial
-          vertexShader={GLOW_VERTEX}
-          fragmentShader={GLOW_FRAGMENT}
-          uniforms={glowUniforms}
-          transparent
-          blending={AdditiveBlending}
-          depthWrite={false}
-        />
       </mesh>
 
       <group ref={rings}>
