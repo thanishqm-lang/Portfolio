@@ -5,9 +5,9 @@ import { UI } from '../content/ui';
 import { onOpenProject } from '../events';
 import { ProjectDialog } from './ProjectDialog';
 import { Reveal } from './Reveal';
-import { GlassPanel, MonoLabel, TagChip } from './ui';
+import { ArrowIcon } from './ui';
 
-/** Selected Work: one glass panel per project, each opening the detail dialog. Rendered from content. */
+/** Selected Work: one ruled row per project, each opening the detail dialog. Rendered from content. */
 export function ProjectPanels() {
   const [open, setOpen] = useState<Project | null>(null);
 
@@ -23,31 +23,31 @@ export function ProjectPanels() {
 
   return (
     <>
-      <ul className="card-grid project-grid">
+      <ul className="work-list">
         {PROJECTS.map((project, index) => (
           <li key={project.id}>
-            <Reveal index={index} className="reveal--fill">
-              <GlassPanel as="article" className="card">
-                <MonoLabel>{project.period}</MonoLabel>
-                <h3 className="card__title">{project.title}</h3>
-                <p className="card__text">{project.pitch}</p>
-                <p className="card__text">{project.role}</p>
-                <ul className="tag-list">
-                  {project.stack.map((tech) => (
-                    <li key={tech}>
-                      <TagChip>{tech}</TagChip>
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  type="button"
-                  className="button button--ghost project-open"
-                  aria-label={`${UI.projectOpen}: ${project.title}`}
-                  onClick={() => setOpen(project)}
-                >
-                  {UI.projectOpen}
-                </button>
-              </GlassPanel>
+            <Reveal index={index}>
+              <article className="work">
+                <p className="work__period">{project.period}</p>
+                <div className="work__main">
+                  <h3 className="work__title">
+                    <button
+                      type="button"
+                      className="work__open"
+                      aria-label={`${UI.projectOpen}: ${project.title}`}
+                      onClick={() => setOpen(project)}
+                    >
+                      {project.title}
+                      <ArrowIcon />
+                    </button>
+                  </h3>
+                  <p className="work__pitch">{project.pitch}</p>
+                  <p className="work__meta">
+                    {project.role}
+                    <span className="work__stack">{project.stack.join(' / ')}</span>
+                  </p>
+                </div>
+              </article>
             </Reveal>
           </li>
         ))}

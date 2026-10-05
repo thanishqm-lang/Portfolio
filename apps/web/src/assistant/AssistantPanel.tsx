@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState, type FormEvent } from 'react';
-import { GlassPanel, MonoLabel } from '../components/ui';
+import { Label, Panel } from '../components/ui';
 import { PROJECTS } from '../content/projects';
 import { SECTIONS, UI } from '../content/ui';
 import { requestOpenProject } from '../events';
@@ -111,7 +111,7 @@ export default function AssistantPanel() {
   };
 
   const chips = (
-    <ul className="tag-list" aria-label={UI.assistantSuggestions}>
+    <ul className="chip-row" aria-label={UI.assistantSuggestions}>
       {SUGGESTED_QUESTIONS.map((question) => (
         <li key={question}>
           <button type="button" className="chip-button" onClick={() => ask(question)}>
@@ -123,9 +123,9 @@ export default function AssistantPanel() {
   );
 
   return (
-    <GlassPanel className="assistant" data-engine={ENGINE_ID}>
+    <Panel className="assistant" data-engine={ENGINE_ID}>
       <div className="assistant__header">
-        <MonoLabel>{UI.assistantLab}</MonoLabel>
+        <Label>{UI.assistantLab}</Label>
         <span className="assistant__status">
           <span className="assistant__dot" aria-hidden="true" />
           {UI.assistantStatus}
@@ -148,7 +148,7 @@ export default function AssistantPanel() {
         {messages.length === 0 ? (
           <div className="assistant__intro">
             <p>{UI.assistantNote}</p>
-            <MonoLabel>{UI.assistantSuggestions}</MonoLabel>
+            <Label>{UI.assistantSuggestions}</Label>
             {chips}
           </div>
         ) : (
@@ -165,7 +165,7 @@ export default function AssistantPanel() {
                     : 'assistant__message assistant__message--lab'
                 }
               >
-                <MonoLabel>{message.role === 'user' ? UI.assistantYou : UI.assistantLab}</MonoLabel>
+                <Label>{message.role === 'user' ? UI.assistantYou : UI.assistantLab}</Label>
                 {message.role === 'lab' ? (
                   <RevealText text={message.text} revealing={revealing} />
                 ) : (
@@ -202,7 +202,7 @@ export default function AssistantPanel() {
         )}
         {thinking && (
           <div className="assistant__message assistant__message--lab assistant__thinking" aria-hidden="true">
-            <MonoLabel>{UI.assistantLab}</MonoLabel>
+            <Label>{UI.assistantLab}</Label>
             <span className="assistant__dots">
               <span />
               <span />
@@ -230,6 +230,6 @@ export default function AssistantPanel() {
           {UI.assistantSend}
         </button>
       </form>
-    </GlassPanel>
+    </Panel>
   );
 }

@@ -1,11 +1,12 @@
 import { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
-import { AdditiveBlending, type Group } from 'three';
+import type { Group } from 'three';
 import { STACK_CATEGORIES } from '../content/stack';
 import type { StackCategory, StackItem } from '../content/types';
 import { SceneCanvas } from '../three/SceneCanvas';
 import type { SceneProps } from '../three/LazyScene';
+import { idleSpeed } from '../three/idleSpeed';
 import { readCssToken } from '../three/tokens';
 
 export interface TechSceneProps extends SceneProps {
@@ -79,12 +80,14 @@ function TechUniverse({
   onHover,
 }: Omit<TechSceneProps, 'active'>) {
   const { nodes, clusters } = useMemo(() => layout(items), [items]);
-  const accent = useMemo(() => readCssToken('--color-accent'), []);
+  const ink = useMemo(() => readCssToken('--color-text'), []);
   const group = useRef<Group>(null);
 
-  // Slow drift that stops while a node is hovered, so it is easy to read and click.
-  useFrame((_, delta) => {
-    if (group.current && hoveredId === null) group.current.rotation.y += delta * 0.05;
+  // A slow drift that settles after a few seconds, and never moves while a node is hovered.
+  useFrame((state, delta) => {
+    if (group.current && hoveredId === null) {
+      group.current.rotation.y += delta * 0.05 * idleSpeed(state.clock.elapsedTime);
+    }
   });
 
   return (
@@ -92,11 +95,10 @@ function TechUniverse({
       <mesh>
         <icosahedronGeometry args={[0.8, 1]} />
         <meshBasicMaterial
-          color={accent}
+          color={ink}
           wireframe
           transparent
-          opacity={0.6}
-          blending={AdditiveBlending}
+          opacity={0.28}
           depthWrite={false}
         />
       </mesh>

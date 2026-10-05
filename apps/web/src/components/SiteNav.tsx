@@ -1,7 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { SECTIONS, UI } from '../content/ui';
 import { useActiveSection } from '../motion/useActiveSection';
-import { useMotionPause } from '../motion/useReducedMotion';
 
 const SECTION_IDS = SECTIONS.map((section) => section.id);
 // A section counts as current once its top is within this distance of the viewport top (nav height plus margin).
@@ -14,7 +13,6 @@ const ACTIVE_OFFSET_PX = 120;
  */
 export function SiteNav() {
   const active = useActiveSection(SECTION_IDS, ACTIVE_OFFSET_PX);
-  const { paused: motionPaused, toggle: toggleMotion } = useMotionPause();
   const [open, setOpen] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
   const menu = useRef<HTMLElement>(null);
@@ -39,17 +37,6 @@ export function SiteNav() {
         <a className="site-nav__mark" href="#hero">
           {UI.siteMark}
         </a>
-        <button
-          type="button"
-          className="site-nav__motion"
-          aria-pressed={motionPaused}
-          onClick={toggleMotion}
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" className="site-nav__motion-icon">
-            {motionPaused ? <path d="M8 5l11 7-11 7z" /> : <path d="M8 5v14M16 5v14" />}
-          </svg>
-          <span className="site-nav__motion-label">{UI.motionPause}</span>
-        </button>
         <button
           ref={toggle}
           type="button"

@@ -3,6 +3,7 @@ import { useFrame } from '@react-three/fiber';
 import { AdditiveBlending, Color, type Group, type Mesh } from 'three';
 import { SceneCanvas } from '../three/SceneCanvas';
 import type { SceneProps } from '../three/LazyScene';
+import { idleSpeed } from '../three/idleSpeed';
 import { readCssToken } from '../three/tokens';
 
 const GLOW_VERTEX = /* glsl */ `
@@ -26,11 +27,15 @@ const GLOW_FRAGMENT = /* glsl */ `
   }
 `;
 
-/** The original AI Core: a pulsing emissive heart inside two wireframe lattices and three rings. */
+/**
+ * The AI Core on the accent field: a warm heart inside two wireframe lattices and three rings. It spins
+ * and pulses for a few seconds, then settles; it keeps following the cursor.
+ */
 function AiCore() {
-  const accent = useMemo(() => readCssToken('--color-accent'), []);
-  const accent2 = useMemo(() => readCssToken('--color-accent-2'), []);
-  const glowUniforms = useMemo(() => ({ uColor: { value: new Color(accent) } }), [accent]);
+  const line = useMemo(() => readCssToken('--scene-line'), []);
+  const line2 = useMemo(() => readCssToken('--scene-line-2'), []);
+  const heartColor = useMemo(() => readCssToken('--scene-heart'), []);
+  const glowUniforms = useMemo(() => ({ uColor: { value: new Color(heartColor) } }), [heartColor]);
 
   const tilt = useRef<Group>(null);
   const lattice = useRef<Group>(null);
@@ -59,16 +64,18 @@ function AiCore() {
       const scale = 1 - scrolled * 0.18;
       tilt.current.scale.setScalar(tilt.current.scale.x + (scale - tilt.current.scale.x) * ease);
     }
+    // Automatic movement eases to rest after a few seconds; the cursor tilt above stays live.
+    const idle = idleSpeed(state.clock.elapsedTime);
     if (lattice.current) {
-      lattice.current.rotation.y += delta * 0.18;
-      lattice.current.rotation.x += delta * 0.05;
+      lattice.current.rotation.y += delta * 0.18 * idle;
+      lattice.current.rotation.x += delta * 0.05 * idle;
     }
     if (rings.current) {
-      rings.current.rotation.z += delta * 0.12;
-      rings.current.rotation.y -= delta * 0.07;
+      rings.current.rotation.z += delta * 0.12 * idle;
+      rings.current.rotation.y -= delta * 0.07 * idle;
     }
     if (heart.current) {
-      const pulse = 1 + Math.sin(state.clock.elapsedTime * 1.8) * 0.07;
+      const pulse = 1 + Math.sin(state.clock.elapsedTime * 1.8) * 0.07 * idle;
       heart.current.scale.setScalar(pulse);
     }
   });
@@ -79,7 +86,7 @@ function AiCore() {
         <mesh>
           <icosahedronGeometry args={[1.7, 1]} />
           <meshBasicMaterial
-            color={accent}
+            color={line}
             wireframe
             transparent
             opacity={0.55}
@@ -90,7 +97,7 @@ function AiCore() {
         <mesh rotation={[0.6, 0.4, 0]}>
           <icosahedronGeometry args={[1.05, 1]} />
           <meshBasicMaterial
-            color={accent2}
+            color={line2}
             wireframe
             transparent
             opacity={0.7}
@@ -102,7 +109,7 @@ function AiCore() {
 
       <mesh ref={heart}>
         <sphereGeometry args={[0.5, 32, 32]} />
-        <meshBasicMaterial color={accent} />
+        <meshBasicMaterial color={heartColor} />
       </mesh>
 
       <mesh scale={1.3}>
@@ -120,15 +127,15 @@ function AiCore() {
       <group ref={rings}>
         <mesh rotation={[Math.PI / 2.4, 0, 0]}>
           <torusGeometry args={[2.25, 0.012, 8, 160]} />
-          <meshBasicMaterial color={accent} transparent opacity={0.8} />
+          <meshBasicMaterial color={line} transparent opacity={0.8} />
         </mesh>
         <mesh rotation={[Math.PI / 3, Math.PI / 4, 0]}>
           <torusGeometry args={[2.55, 0.01, 8, 160]} />
-          <meshBasicMaterial color={accent2} transparent opacity={0.7} />
+          <meshBasicMaterial color={line2} transparent opacity={0.7} />
         </mesh>
         <mesh rotation={[Math.PI / 1.8, -Math.PI / 5, 0]}>
           <torusGeometry args={[2.9, 0.008, 8, 160]} />
-          <meshBasicMaterial color={accent} transparent opacity={0.45} />
+          <meshBasicMaterial color={line} transparent opacity={0.45} />
         </mesh>
       </group>
     </group>

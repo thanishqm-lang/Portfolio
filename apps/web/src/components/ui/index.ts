@@ -1,5 +1,5 @@
+export { ArrowIcon } from './ArrowIcon';
 export { Button } from './Button';
-export { GlassPanel } from './GlassPanel';
-export { MonoLabel } from './MonoLabel';
+export { Label } from './Label';
+export { Panel } from './Panel';
 export { SectionHeading } from './SectionHeading';
-export { TagChip } from './TagChip';

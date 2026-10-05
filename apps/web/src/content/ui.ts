@@ -4,27 +4,24 @@
  */
 export interface SectionDef {
   readonly id: string;
-  readonly eyebrow: string;
   readonly title: string;
   /** The short label used in the navigation bar. */
   readonly navLabel: string;
 }
 
 export const SECTIONS = [
-  { id: 'hero', eyebrow: 'Quality Engineering Lab', title: 'THANISHQ', navLabel: 'Home' },
-  { id: 'what-i-build', eyebrow: 'What I do', title: 'What I Do', navLabel: 'What I do' },
-  { id: 'selected-work', eyebrow: 'Selected work', title: 'Selected Work', navLabel: 'Work' },
-  { id: 'tech-universe', eyebrow: 'My toolkit', title: 'My Toolkit', navLabel: 'Toolkit' },
-  { id: 'about', eyebrow: 'About', title: 'About Me', navLabel: 'About' },
-  { id: 'assistant', eyebrow: 'Ask the Lab', title: 'Ask the Lab', navLabel: 'Ask' },
-  { id: 'contact', eyebrow: 'Contact', title: 'Get in Touch', navLabel: 'Contact' },
+  { id: 'hero', title: 'Sri Thanishq Manda', navLabel: 'Home' },
+  { id: 'what-i-build', title: 'What I Do', navLabel: 'What I do' },
+  { id: 'selected-work', title: 'Selected Work', navLabel: 'Work' },
+  { id: 'tech-universe', title: 'My Toolkit', navLabel: 'Toolkit' },
+  { id: 'about', title: 'About Me', navLabel: 'About' },
+  { id: 'assistant', title: 'Ask the Lab', navLabel: 'Ask' },
+  { id: 'contact', title: 'Get in Touch', navLabel: 'Contact' },
 ] as const satisfies readonly SectionDef[];
 
 export type SectionId = (typeof SECTIONS)[number]['id'];
 
 export const UI = {
-  shellNote: 'This section is a placeholder and is filled in by a later backlog item.',
-  next: 'Next section',
   experienceHeading: 'Experience',
   educationHeading: 'Education',
   focusHeading: 'Focus areas',
@@ -53,9 +50,8 @@ export const UI = {
   assistantFallback:
     "I can only answer questions about my work: what I do, my projects, tools, experience, education and how to contact me. I don't have an answer for that. Try one of these:",
   skipToContent: 'Skip to main content',
-  motionPause: 'Pause animations',
   assistantLogLabel: 'Conversation with the assistant',
-  siteMark: 'THANISHQ',
+  siteMark: 'Thanishq Manda',
   navLabel: 'Primary',
   menuOpen: 'Menu',
   menuClose: 'Close menu',

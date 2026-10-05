@@ -1,14 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-120 -120 240 240">
-  <rect x="-120" y="-120" width="240" height="240" rx="48" fill="#05070d"/>
-  <defs>
-    <radialGradient id="g">
-      <stop offset="0" stop-color="#00e5ff" stop-opacity="0.95"/>
-      <stop offset="0.5" stop-color="#00e5ff" stop-opacity="0.25"/>
-      <stop offset="1" stop-color="#00e5ff" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
-  <circle r="100" fill="url(#g)"/>
-  <circle r="92" fill="none" stroke="#00e5ff" stroke-width="7" opacity="0.8"/>
-  <polygon points="0,-58 50,-29 50,29 0,58 -50,29 -50,-29" fill="none" stroke="#8b5cf6" stroke-width="8"/>
-  <circle r="20" fill="#00e5ff"/>
+  <rect x="-120" y="-120" width="240" height="240" rx="24" fill="#2236ff"/>
+  <circle r="88" fill="none" stroke="#ffffff" stroke-width="7"/>
+  <polygon points="0,-58 50,-29 50,29 0,58 -50,29 -50,-29" fill="none" stroke="#b9c3ff" stroke-width="8"/>
+  <circle r="20" fill="#ff6a3d"/>
 </svg>

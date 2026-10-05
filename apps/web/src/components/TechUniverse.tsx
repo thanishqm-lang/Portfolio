@@ -6,7 +6,7 @@ import { useMediaQuery } from '../motion/useMediaQuery';
 import { useReducedMotion } from '../motion/useReducedMotion';
 import { LazyScene } from '../three/LazyScene';
 import { detectWebGL } from '../three/webgl';
-import { GlassPanel, MonoLabel } from './ui';
+import { Label, Panel } from './ui';
 
 // The 3D chunk loads on demand; it is never part of the entry bundle (tenet 3).
 const TechUniverseScene = lazy(() => import('../scenes/TechUniverseScene'));
@@ -34,7 +34,7 @@ export function TechUniverse() {
   return (
     <div className="tech">
       <div className="tech__controls">
-        <div role="group" aria-label={UI.filterLabel} className="tag-list">
+        <div role="group" aria-label={UI.filterLabel} className="chip-row">
           {filters.map((name) => (
             <button
               key={name}
@@ -64,7 +64,7 @@ export function TechUniverse() {
                 <h3 id={headingId} className="tech__group-title">
                   {category.name}
                 </h3>
-                <ul className="tag-list">
+                <ul className="chip-row">
                   {members.map((item) => (
                     <li key={item.id}>
                       <button
@@ -87,19 +87,19 @@ export function TechUniverse() {
           })}
         </div>
 
-        <GlassPanel className="tech__detail" aria-live="polite">
+        <Panel className="tech__detail" aria-live="polite">
           {selected === null ? (
             <p>{UI.detailEmpty}</p>
           ) : (
             <>
               <h3 className="tech__detail-title">{selected.name}</h3>
-              <MonoLabel>{UI.detailCategory}</MonoLabel>
+              <Label>{UI.detailCategory}</Label>
               <p>{selected.category}</p>
-              <MonoLabel>{UI.detailUsedFor}</MonoLabel>
+              <Label>{UI.detailUsedFor}</Label>
               <p>{selected.usedFor}</p>
             </>
           )}
-        </GlassPanel>
+        </Panel>
       </div>
 
       {show3D && (

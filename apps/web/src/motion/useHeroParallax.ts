@@ -5,7 +5,7 @@ import { useReducedMotion } from './useReducedMotion';
  * Publishes how far the hero has scrolled (0 at the top, 1 once it has left) as the CSS variable
  * `--parallax` on the element, so the grid and the Core can drift at different rates. It only reads
  * scroll position (tenet 4); the CSS moves things with `translate`, never layout properties. With reduced
- * motion or paused animations the variable is removed and everything sits at its resting position.
+ * motion the variable is removed and everything sits at its resting position.
  */
 export function useHeroParallax(ref: RefObject<HTMLElement | null>): void {
   const reducedMotion = useReducedMotion();

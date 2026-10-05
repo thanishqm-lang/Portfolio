@@ -1,6 +1,6 @@
 // Accessibility gate (WCAG 2.2 AA), run as part of `npm run lint`.
 // 1. Structural rules over the web app's source (no browser needed).
-// 2. Contrast ratios recomputed from the design tokens, including text over the brightest glow.
+// 2. Contrast ratios recomputed from the design tokens for every text and control pairing the page uses.
 // It is a regression gate, not an audit: it cannot judge wording, reading order or real screen-reader
 // behaviour, so a green run does not mean the site is accessible.
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -110,26 +110,35 @@ const ratio = (a, b) => {
 };
 
 const bg = hex('--color-bg');
-const glow = rgba('--color-glow');
-const glow2 = rgba('--color-glow-2');
-// The brightest page background: the glows stacked on top of each other, at full strength.
-const glowOnly = over(glow, bg);
-const glowsStacked = over(glow, over(glow2, bg));
+const raised = hex('--color-bg-raised');
+const sunken = hex('--color-bg-sunken');
+const ink = hex('--color-ink');
+const accent = hex('--color-accent');
+const white = hex('--color-on-field');
 const inputBorder = over(rgba('--color-border-strong'), bg);
+const ghostBorder = over(rgba('--color-border-on-field'), accent);
 
 const checks = [
   ['text on page', hex('--color-text'), bg, 4.5],
   ['muted text on page', hex('--color-text-muted'), bg, 4.5],
-  ['accent on page', hex('--color-accent'), bg, 4.5],
-  ['button text on accent', hex('--color-accent-contrast'), hex('--color-accent'), 4.5],
-  ['muted text on the cyan glow', hex('--color-text-muted'), glowOnly, 4.5],
-  ['muted text on both glows stacked', hex('--color-text-muted'), glowsStacked, 4.5],
-  ['text on both glows stacked', hex('--color-text'), glowsStacked, 4.5],
-  ['accent on both glows stacked', hex('--color-accent'), glowsStacked, 4.5],
+  ['muted text on the sunken surface', hex('--color-text-muted'), sunken, 4.5],
+  ['text on raised surfaces', hex('--color-text'), raised, 4.5],
+  ['accent (links, focus) on page', accent, bg, 4.5],
+  ['accent on raised surfaces', accent, raised, 4.5],
+  ['text on the accent field', white, accent, 4.5],
+  ['secondary text on the accent field', hex('--color-on-field-muted'), accent, 4.5],
+  ['primary button on the field: accent text on white', accent, white, 4.5],
+  ['button text on accent', hex('--color-accent-contrast'), accent, 4.5],
+  ['text on the ink band', white, ink, 4.5],
+  ['secondary text on the ink band', hex('--color-on-ink-muted'), ink, 4.5],
+  ['warm mark on the ink band (email hover)', hex('--scene-heart'), ink, 4.5],
+  ['page text on ink buttons and pressed chips', bg, ink, 4.5],
   ['input border on page (1.4.11)', inputBorder, bg, 3],
+  ['outlined button border on the accent field (1.4.11)', ghostBorder, accent, 3],
 ];
 for (const name of ['--color-accent', '--color-accent-2', '--color-accent-3', '--color-accent-4', '--color-accent-5']) {
-  checks.push([`category colour ${name} on page`, hex(name), bg, 4.5]);
+  checks.push([`category colour ${name} as text on page`, hex(name), bg, 4.5]);
+  checks.push([`white text on category colour ${name} (selected tool)`, white, hex(name), 4.5]);
 }
 for (const [label, fg, back, need] of checks) {
   const r = ratio(fg, back);

@@ -1,7 +1,7 @@
 import { Component, Suspense, lazy, useRef, type ReactNode } from 'react';
 import { UI } from '../content/ui';
 import { useInView } from '../three/useInView';
-import { GlassPanel } from './ui';
+import { Panel } from './ui';
 
 // The assistant (engine and knowledge) is a separate chunk, loaded when the section nears the
 // viewport; it is never part of the entry bundle (tenet 3).
@@ -16,9 +16,9 @@ class LoadBoundary extends Component<{ children: ReactNode }, { failed: boolean 
 
   override render(): ReactNode {
     return this.state.failed ? (
-      <GlassPanel role="alert">
+      <Panel role="alert">
         <p>{UI.assistantLoadError}</p>
-      </GlassPanel>
+      </Panel>
     ) : (
       this.props.children
     );
@@ -36,9 +36,9 @@ export function AssistantSection() {
         <LoadBoundary>
           <Suspense
             fallback={
-              <GlassPanel role="status">
+              <Panel role="status">
                 <p>{UI.assistantLoading}</p>
-              </GlassPanel>
+              </Panel>
             }
           >
             <AssistantPanel />

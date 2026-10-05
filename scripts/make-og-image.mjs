@@ -28,57 +28,46 @@ if (browser === undefined) {
 const tokens = readFileSync(join(root, 'apps/web/src/styles/tokens.css'), 'utf8');
 const token = (name) => tokens.match(new RegExp(`${name}:\\s*(#[0-9a-fA-F]{6})`))?.[1] ?? '#ffffff';
 const color = {
-  bg: token('--color-bg'),
-  text: token('--color-text'),
-  muted: token('--color-text-muted'),
-  accent: token('--color-accent'),
-  accent2: token('--color-accent-2'),
+  field: token('--color-accent'),
+  text: token('--color-on-field'),
+  muted: token('--color-on-field-muted'),
+  line: token('--scene-line'),
+  line2: token('--scene-line-2'),
+  heart: token('--scene-heart'),
 };
 
 const font = (pkg, file) =>
   `data:font/woff2;base64,${readFileSync(join(root, `node_modules/@fontsource-variable/${pkg}/files/${file}`)).toString('base64')}`;
-const grotesk = font('space-grotesk', 'space-grotesk-latin-wght-normal.woff2');
-const mono = font('jetbrains-mono', 'jetbrains-mono-latin-wght-normal.woff2');
-const inter = font('inter', 'inter-latin-wght-normal.woff2');
+const display = font('bricolage-grotesque', 'bricolage-grotesque-latin-wght-normal.woff2');
+const body = font('hanken-grotesk', 'hanken-grotesk-latin-wght-normal.woff2');
 
 const html = `<!doctype html>
 <html><head><meta charset="utf-8"><style>
-@font-face { font-family: G; src: url(${grotesk}) format('woff2'); font-weight: 300 700; }
-@font-face { font-family: M; src: url(${mono}) format('woff2'); font-weight: 100 800; }
-@font-face { font-family: I; src: url(${inter}) format('woff2'); font-weight: 100 900; }
+@font-face { font-family: D; src: url(${display}) format('woff2'); font-weight: 200 800; }
+@font-face { font-family: B; src: url(${body}) format('woff2'); font-weight: 100 900; }
 * { box-sizing: border-box; margin: 0; }
-html, body { width: 1200px; height: 630px; overflow: hidden; background: ${color.bg}; }
-body { position: relative; font-family: I, sans-serif; color: ${color.text}; }
-.glow1 { position: absolute; inset: 0; background: radial-gradient(620px 460px at 82% 45%, ${color.accent}40, transparent 70%); }
-.glow2 { position: absolute; inset: 0; background: radial-gradient(700px 420px at 40% -10%, ${color.accent2}33, transparent 70%); }
-.copy { position: absolute; left: 80px; top: 0; bottom: 0; width: 640px; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
-.eyebrow { font: 500 22px M, monospace; letter-spacing: 0.2em; text-transform: uppercase; color: ${color.accent}; }
-.name { font: 700 118px/1 G, sans-serif; letter-spacing: -0.03em; }
-.role { font: 500 44px G, sans-serif; letter-spacing: 0.08em; color: ${color.accent}; }
-.tag { font: 400 30px/1.35 I, sans-serif; color: ${color.muted}; max-width: 560px; text-wrap: balance; }
-.place { font: 500 20px M, monospace; letter-spacing: 0.12em; color: ${color.muted}; }
-svg { position: absolute; right: 40px; top: 35px; width: 560px; height: 560px; }
-.ring { fill: none; stroke: ${color.accent}; stroke-width: 1.2; }
-.ring2 { fill: none; stroke: ${color.accent2}; stroke-width: 1.2; }
+html, body { width: 1200px; height: 630px; overflow: hidden; background: ${color.field}; }
+body { position: relative; font-family: B, sans-serif; color: ${color.text}; }
+.copy { position: absolute; left: 80px; top: 0; bottom: 0; width: 640px; display: flex; flex-direction: column; justify-content: flex-end; gap: 20px; padding-bottom: 84px; }
+.name { font: 700 96px/0.94 D, sans-serif; letter-spacing: -0.04em; }
+.role { font: 600 38px D, sans-serif; letter-spacing: -0.01em; }
+.tag { font: 400 28px/1.35 B, sans-serif; color: ${color.muted}; max-width: 520px; }
+svg { position: absolute; right: 40px; top: 65px; width: 500px; height: 500px; }
+.ring { fill: none; stroke: ${color.line}; stroke-width: 1.2; }
+.ring2 { fill: none; stroke: ${color.line2}; stroke-width: 1.2; }
 </style></head><body>
-<div class="glow1"></div><div class="glow2"></div>
 <div class="copy">
-  <div class="eyebrow">Quality Engineering Lab</div>
-  <div class="name">THANISHQ</div>
-  <div class="role">QA × AUTOMATION</div>
+  <div class="name">Sri Thanishq Manda</div>
+  <div class="role">QA and automation engineer</div>
   <div class="tag">Making software reliable, release after release.</div>
-  <div class="place">HYDERABAD · INDIA</div>
 </div>
 <svg viewBox="-120 -120 240 240">
-  <defs><radialGradient id="g"><stop offset="0" stop-color="${color.accent}" stop-opacity=".95"/><stop offset=".45" stop-color="${color.accent}" stop-opacity=".25"/><stop offset="1" stop-color="${color.accent}" stop-opacity="0"/></radialGradient></defs>
-  <circle r="100" fill="url(#g)"/>
-  <circle class="ring" r="98" opacity=".7"/><circle class="ring2" r="80" opacity=".8"/>
-  <polygon class="ring" points="0,-62 54,-31 54,31 0,62 -54,31 -54,-31" opacity=".8"/>
-  <polygon class="ring2" points="0,-34 29,-17 29,17 0,34 -29,17 -29,-17" opacity=".9"/>
-  <circle r="12" fill="${color.accent}"/>
+  <circle class="ring" r="98" opacity=".85"/><circle class="ring2" r="80"/>
+  <polygon class="ring" points="0,-62 54,-31 54,31 0,62 -54,31 -54,-31"/>
+  <polygon class="ring2" points="0,-34 29,-17 29,17 0,34 -29,17 -29,-17"/>
+  <circle r="12" fill="${color.heart}"/>
 </svg>
 </body></html>`;
-
 const dir = mkdtempSync(join(tmpdir(), 'awi-og-'));
 const page = join(dir, 'og.html');
 writeFileSync(page, html);

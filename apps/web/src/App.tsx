@@ -63,7 +63,6 @@ export function App() {
           <Section
             key={section.id}
             id={section.id}
-            eyebrow={section.eyebrow}
             title={section.title}
             isFirst={index === 0}
             background={section.id === 'hero' ? <HeroBackground /> : undefined}

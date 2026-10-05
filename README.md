@@ -1,12 +1,12 @@
-# THANISHQ: Quality Engineering Lab
+# Sri Thanishq Manda: QA and automation portfolio
 
-The personal portfolio of **Sri Thanishq Manda**, QA and automation engineer in Hyderabad, India. A single-page, dark, 3D "lab": a glowing AI Core hero, selected work, an interactive toolkit, an About section, and an assistant that answers questions about the work. It is a static site with no server, no database and no tracking.
+The personal portfolio of **Sri Thanishq Manda**, QA and automation engineer in Hyderabad, India. A single-page, light editorial site with a committed blue opening that carries a 3D line-drawn Core, selected work, an interactive toolkit, an About section, and an assistant that answers questions about the work. It is a static site with no server, no database and no tracking.
 
 ## What is in the site
 - **Hero** with an animated 3D Core and perspective grid, and a short orchestrated intro.
 - **What I do**, **Selected Work** (with a detail dialog), **My Toolkit** (an accessible list plus an interactive 3D universe), **About**, **Contact**.
 - **Ask the Lab**: a small assistant that runs in your browser and answers only from what is written on the site. It uses no AI service, so it cannot make things up.
-- Sticky navigation, a skip link, keyboard support, a **Pause animations** control, and reduced-motion and no-WebGL fallbacks.
+- Sticky navigation, a skip link, keyboard support, nothing that loops by itself for more than a few seconds, and reduced-motion and no-WebGL fallbacks.
 
 ## Tech
 React 19, TypeScript (strict), Vite, React Three Fiber (three.js) and drei, Motion. Hosted as static files on Vercel. The decisions and their reasons are in [`docs/adr/`](docs/adr).

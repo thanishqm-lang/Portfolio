@@ -13,7 +13,7 @@ interface RevealProps {
 
 /**
  * Fades and lifts its content in once, when it scrolls into view. The default is the finished state:
- * content that is on screen at load, or any content when motion is reduced or paused, is simply shown.
+ * content that is on screen at load, or any content when motion is reduced, is simply shown.
  * Only content that the observer reports as below the screen gets a start state, and the same observer
  * removes it, so nothing can stay hidden. It never measures the page itself (no forced layout), which
  * keeps startup cheap. Only opacity and transform change (motion-design rules).

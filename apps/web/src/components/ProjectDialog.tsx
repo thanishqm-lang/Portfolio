@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef } from 'react';
 import type { Project } from '../content/types';
 import { UI } from '../content/ui';
-import { Button, MonoLabel, TagChip } from './ui';
+import { Button, Label } from './ui';
 
 interface ProjectDialogProps {
   /** The project to show, or null when closed. */
@@ -48,7 +48,7 @@ export function ProjectDialog({ project, onClose }: ProjectDialogProps) {
     >
       {project !== null && (
         <div className="project-dialog__body">
-          <MonoLabel>{project.period}</MonoLabel>
+          <Label>{project.period}</Label>
           <h3 id={titleId} className="project-dialog__title">
             {project.title}
           </h3>
@@ -57,28 +57,20 @@ export function ProjectDialog({ project, onClose }: ProjectDialogProps) {
             <dt>{UI.projectRole}</dt>
             <dd>{project.role}</dd>
             <dt>{UI.projectStack}</dt>
-            <dd>
-              <ul className="tag-list">
-                {project.stack.map((tech) => (
-                  <li key={tech}>
-                    <TagChip>{tech}</TagChip>
-                  </li>
-                ))}
-              </ul>
-            </dd>
+            <dd>{project.stack.join(', ')}</dd>
           </dl>
           {project.links.length > 0 && (
             <ul className="project-dialog__links" aria-label={UI.projectLinks}>
               {project.links.map((link) => (
                 <li key={link.href}>
-                  <Button href={link.href} external variant="ghost">
+                  <Button href={link.href} external variant="ghost" arrow>
                     {link.label}
                   </Button>
                 </li>
               ))}
             </ul>
           )}
-          <Button variant="ghost" onClick={() => ref.current?.close()}>
+          <Button variant="primary" onClick={() => ref.current?.close()}>
             {UI.projectClose}
           </Button>
         </div>

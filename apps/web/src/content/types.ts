@@ -4,8 +4,6 @@ export interface Capability {
   readonly id: string;
   readonly title: string;
   readonly description: string;
-  /** Which original SVG icon to draw (see components/icons.tsx). */
-  readonly icon: 'manual' | 'automation' | 'pipeline' | 'agile';
 }
 
 export interface ExperienceEntry {
